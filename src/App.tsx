@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Header from './components/Header'
 import FilmProvider from './context/FilmProvider'
+import Home from './pages/Home'
 
 const GenericComponent = ({children}: {children: React.ReactNode}) => {
   return <>
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <GenericComponent>
-      <span>Home</span>
+      <Home />
     </GenericComponent>
   },
   {
