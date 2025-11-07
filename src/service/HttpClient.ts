@@ -6,21 +6,12 @@ const client: AxiosInstance = axios.create({
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${import.meta.env.VITE_API_READ_KEY}`,
+    'Authorization': `Bearer ${import.meta.env.VITE_API_TOKEN}`,
   },
 });
 
 client.interceptors.request.use(
   (config) => {
-    if (import.meta.env.VITE_API_KEY && !config.params) {
-      config.params = {};
-    }
-    if (import.meta.env.VITE_API_KEY) {
-      config.params = {
-        ...config.params,
-        api_key: import.meta.env.VITE_API_KEY,
-      };
-    }
     return config;
   },
   (error: AxiosError) => {
