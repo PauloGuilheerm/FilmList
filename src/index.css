@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+    --color-ocean: #3b82f6;
+    --color-redbutton: #ef4444;
+}
+
 html,
 body {
     margin: 0;

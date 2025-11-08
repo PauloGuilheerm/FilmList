@@ -47,6 +47,7 @@ export default function Home() {
       showToast({ message: 'Filme não encontrado', type: 'error' });
     }
   };
+
   return <InfiniteScroll
     dataLength={films.length}
     className="flex flex-wrap justify-start ps-4 pt-4 gap-4"

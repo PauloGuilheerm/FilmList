@@ -3,6 +3,7 @@ import Header from './components/Header'
 import FilmProvider from './context/FilmProvider'
 import Home from './pages/Home'
 import { ToastProvider } from './context/ToastProvider'
+import Movie from './pages/Movie'
 
 const GenericComponent = ({ children }: { children: React.ReactNode }) => {
   return <>
@@ -10,6 +11,7 @@ const GenericComponent = ({ children }: { children: React.ReactNode }) => {
     {children}
   </>
 }
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -18,9 +20,13 @@ const router = createBrowserRouter([
     </GenericComponent>
   },
   {
-
+    path: '/movie/:id',
+    element: <GenericComponent>
+      <Movie />
+    </GenericComponent>
   }
-])
+]);
+
 export default function App() {
   return <ToastProvider>
     <FilmProvider>
