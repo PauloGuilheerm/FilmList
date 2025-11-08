@@ -1,10 +1,11 @@
 import type { MouseEvent } from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
+import Rating from "./Rating";
 
 type CardProps = {
   title: string;
-  rating: number | string;
+  rating: number;
   posterUrl?: string;
   onToggleFavorite: () => void;
   onFilmClick: (index: number) => void;
@@ -66,14 +67,7 @@ export default function Card({
           <p className="truncate text-[12px] font-semibold text-white" title={title}>{title}</p>
         </div>
 
-        <span
-          className="
-          items-center justify-start rounded-full bg-[#f59e0b]
-          px-1 py-[3px] text-[11px] font-semibold text-black/90"
-          title="Nota"
-        >
-          {rating}
-        </span>
+        <Rating rating={rating} />
       </div>
 
       <div className="pointer-events-none absolute inset-0 rounded-xl ring-0 transition group-hover:ring-2 group-hover:ring-white/10" />

@@ -62,7 +62,7 @@ export default function Home() {
       <Card
         key={`${film.id}-${film.title.replaceAll(' ', '-')}`}
         index={index}
-        rating={film.vote_average.toFixed(2)}
+        rating={Number.parseInt(film.vote_average.toFixed(2))}
         title={film.title}
         posterUrl={film.backdrop_path ?? ''}
         isFavorite={isFavorite(film.id)}

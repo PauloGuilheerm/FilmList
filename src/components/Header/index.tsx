@@ -1,10 +1,21 @@
+import { useNavigate } from 'react-router-dom';
 import Clapper from '../../assets/clapper.png'
 import { Tabs } from '../Tabs'
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    navigate(`/search?query=${event.target.value}`);
+  };
+
+  const handleRedirectToHome = () => {
+    navigate('/');
+  };
+
   return <>
     <header className="flex justify-between items-center h-[70px] px-4 border-b border-gray-800">
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 cursor-pointer" onClick={handleRedirectToHome}>
         <img src={Clapper} alt="Clapper" className="h-12 w-12" />
         <span className="text-yellow-400 font-bold text-2xl">
           MovieDB

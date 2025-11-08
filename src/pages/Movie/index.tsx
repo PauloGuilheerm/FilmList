@@ -7,6 +7,7 @@ import { formatDateBR } from "../../utils/date";
 import { useFavorites } from "../../hooks/useFavorites";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
+import Rating from "../../components/Card/Rating";
 
 export default function Movie() {
   const [film, setFilm] = useState<Film | null>(null);
@@ -94,12 +95,7 @@ export default function Movie() {
             <span className="text-md font-medium text-slate-400 ms-5">
               Nota TMDB:
             </span>
-            <span className="
-              items-center justify-start rounded-full bg-[#f59e0b]
-              px-2 py-[3px] text-[11px] font-semibold text-black/90 w-fit ms-1"
-            >
-              {film.vote_average?.toFixed(2)}
-            </span>
+            <Rating className="ms-1" rating={Number.parseInt(film.vote_average.toFixed(2))} />
           </div>
         </div>
         <div className="max-w-full overflow-hidden mt-4">
