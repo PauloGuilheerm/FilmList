@@ -31,7 +31,13 @@ const router = createBrowserRouter([
     element: <GenericComponent>
       <Favorites />
     </GenericComponent>
-  }
+  },
+  {
+    path: '/search?q=termo',
+    element: <GenericComponent>
+      <Favorites />
+    </GenericComponent>
+  },
 ]);
 
 export default function App() {

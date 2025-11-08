@@ -24,14 +24,15 @@ export default function Home() {
     if (loading) return;
     try {
       setLoading(true);
-      const response = await getMovies(page);
+      const nextPage = page + 1;
+      const response = await getMovies(nextPage);
       setMovies((prev) => {
         const ids = new Set(prev.map((movie) => movie.id));
         const uniques = response.results.filter((movie) => !ids.has(movie.id));
         return [...prev, ...uniques];
       });
       setHasMore(response.total_pages > response.page);
-      setPage(response.page);
+      setPage(nextPage);
     } catch {
       showToast({ message: 'Erro ao buscar filmes', type: 'error' });
     } finally {
@@ -50,8 +51,9 @@ export default function Home() {
 
   return <InfiniteScroll
     dataLength={movies.length}
-    className="flex flex-wrap justify-start ps-4 pt-4 gap-4"
+    className="flex flex-wrap justify-start ps-4 pt-4 gap-4 overflow-y-auto"
     next={fetchMovies}
+    height={window.innerHeight - 100}
     hasMore={hasMore}
     loader={<div className="flex justify-center items-center w-full h-100">
       <FaSpinner size={50} className="text-slate-300 animate-spin" />

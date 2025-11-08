@@ -2,8 +2,8 @@ import type { Movie } from "../../types/Movie";
 import type { MoviesResponse } from "../../types/MoviesResponse";
 import httpClient from "../HttpClient";
 
-export const getFavorites = async (): Promise<MoviesResponse> => {
-    const response = await httpClient.get<MoviesResponse>(`/account/${import.meta.env.VITE_ACCOUNT_KEY}/favorite/movies`);
+export const getFavorites = async (page: number): Promise<MoviesResponse> => {
+    const response = await httpClient.get<MoviesResponse>(`/account/${import.meta.env.VITE_ACCOUNT_KEY}/favorite/movies?page=${page}`);
     return response;
 }
 

@@ -5,15 +5,14 @@ import type { Movie } from "../../types/Movie";
 import { getMovie } from "../../service/tmdb/movies.service";
 import MovieImage from "./MovieImage";
 import MovieDetails from "./MovieDetails";
-import { useMovie } from "../../context/MovieContext";
 import { useToast } from "../../context/ToastContext";
 import { FaSpinner } from "react-icons/fa";
 
 export default function MoviePage() {
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
-  const { loading, setLoading } = useMovie();
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -31,11 +30,10 @@ export default function MoviePage() {
       }
     };
 
-    fetchMovie();
-  }, [id]);
+    void fetchMovie();
+  }, [id, showToast]);
 
 
-  console.log(loading);
   if (loading || !movie) {
     return <div className="flex items-center justify-center h-[calc(100vh-100px)]">
       {loading && <FaSpinner size={50} className="text-slate-300 animate-spin" />}

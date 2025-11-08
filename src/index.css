@@ -3,10 +3,18 @@
 @theme {
     --color-ocean: #3b82f6;
     --color-redbutton: #ef4444;
+    --color-background: #1e293b;
 }
 
 html,
-body, #root {
+body,
+#root {
     margin: 0;
-    background-color: #1e293b;
+    background-color: var(--color-background);
+    overflow: hidden;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-slate-400) var(--color-background);
 }
