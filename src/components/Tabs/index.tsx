@@ -5,22 +5,31 @@ type TabsProps = {
     label: string;
     to: string;
   }[];
+  orientation?: 'horizontal' | 'vertical';
+  className?: string;
+  onSelect?: (path: string) => void;
 }
-export function Tabs({ tabs }: TabsProps) {
+export function Tabs({ tabs, orientation = 'horizontal', className = '', onSelect }: TabsProps) {
   const base =
-    "px-4 py-2 rounded-md text-sm font-medium transition-colors";
+    "py-2 rounded-md text-sm font-medium transition-colors";
   const inactive =
-    "text-slate-300 hover:text-white hover:bg-slate-700/70";
+    "text-slate-300 hover:text-white hover:bg-slate-700/70 px-1";
   const active =
-    "bg-[#3b82f6] text-white hover:bg-[#3b82f6]/80";
+    "bg-[#3b82f6] text-white hover:bg-[#3b82f6]/80 px-4";
+  const listBase = "flex gap-2";
+  const directionClasses = orientation === 'vertical'
+    ? "flex-col items-start"
+    : "flex-row items-center";
+  const listClasses = [listBase, directionClasses, className].filter(Boolean).join(' ');
 
   return (
     <nav aria-label="Principal">
-      <ul className="flex items-center gap-2">
+      <ul className={listClasses}>
         {tabs.map((tab) => (
           <li key={tab.label}>
             <NavLink
               to={tab.to}
+              onClick={() => onSelect?.(tab.to)}
               className={({ isActive }) => `${base} ${isActive ? active : inactive}`}
             >
               {tab.label}

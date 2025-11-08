@@ -16,7 +16,7 @@ export default function MovieImage({ backdrop_path, title }: { backdrop_path: st
     };
   }, [backdrop_path]);
 
-  return <figure className="w-full overflow-hidden rounded-2xl shadow-lg lg:w-2/3">
+  return <figure className="w-full overflow-hidden rounded-2xl shadow-lg lg:flex-1">
     {backdropUrl ? (
       <img
         src={backdropUrl.default}
@@ -24,12 +24,8 @@ export default function MovieImage({ backdrop_path, title }: { backdrop_path: st
         sizes="(max-width: 1024px) 100vw, 100vw"
         alt={`Poster do filme ${title}`}
         loading="lazy"
-        className="w-full object-cover"
-        style={{
-          height: 'calc(100vh)',
-          maxHeight: '770px',
-          minHeight: '320px',
-        }}
+        className="h-auto w-full object-cover md:rounded-2xl max-h-[24rem] sm:max-h-[28rem] md:max-h-[32rem] lg:max-h-[36rem]"
+        style={{ aspectRatio: '16 / 9' }}
       />
     ) : (
       <div className="flex aspect-video w-full items-center justify-center bg-slate-700 text-sm text-slate-300">

@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 import Clapper from '../../assets/clapper.png'
 import { Tabs } from '../Tabs'
 
 export default function Header() {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     navigate(`/search?query=${event.target.value}`);
@@ -11,27 +14,62 @@ export default function Header() {
 
   const handleRedirectToHome = () => {
     navigate('/');
+    setIsMenuOpen(false);
   };
 
-  return <>
-    <header className="flex justify-between items-center h-[70px] px-4 border-b border-gray-800">
-      <div className="flex items-center gap-1 cursor-pointer" onClick={handleRedirectToHome}>
+  const tabs = [
+    { label: 'Home', to: '/' },
+    { label: 'Favoritos', to: '/favoritos' },
+  ];
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  const closeMenu = () => setIsMenuOpen(false);
+
+  return <header className="sticky top-0 z-40 border-b border-gray-700 bg-slate-800/95 backdrop-blur supports-[backdrop-filter]:bg-slate-800/80 relative">
+    <div className="flex w-full flex-wrap items-center gap-3 px-4 py-3 md:flex-nowrap md:justify-between">
+      <div className="flex cursor-pointer items-center gap-2" onClick={handleRedirectToHome}>
         <img src={Clapper} alt="Clapper" className="h-12 w-12" />
-        <span className="text-yellow-400 font-bold text-2xl">
+        <span className="text-2xl font-bold text-yellow-400">
           MovieDB
         </span>
       </div>
-      <input
-        type="text"
-        placeholder="Buscar filmes..."
-        className="
-      w-full max-w-md rounded-full bg-[#334155] h-[45px] px-4 py-2 text-slate-100
-      placeholder:text-slate-400 outline-none text-md font-medium
-      focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-none"
-      />
 
-      <Tabs tabs={[{ label: 'Home', to: '/' }, { label: 'Favoritos', to: '/favoritos' }]} />
-    </header>
-    <div className="border-b border-slate-700" />
-  </>
+      <div className="order-3 w-full md:order-2 md:max-w-xl md:flex-1 md:px-6">
+        <input
+          type="text"
+          placeholder="Buscar filmes..."
+          className="w-full rounded-full bg-[#334155] px-4 py-2 text-md font-medium text-slate-100 placeholder:text-slate-400 outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-none"
+          onFocus={closeMenu}
+          onChange={handleSearch}
+        />
+      </div>
+
+      <div className="order-2 ml-auto flex items-center gap-2 md:order-3 md:ml-0">
+        <button
+          type="button"
+          className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-700 text-slate-200 transition-colors hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-[#3b82f6]/60 focus:ring-offset-2 focus:ring-offset-slate-900 md:hidden"
+          onClick={toggleMenu}
+          aria-label="Abrir menu"
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+        <div className="hidden md:block">
+          <Tabs tabs={tabs} />
+        </div>
+      </div>
+    </div>
+    {isMenuOpen && (
+      <div className="md:hidden">
+        <div className="mx-auto w-full max-w-6xl px-4 pb-4">
+          <div className="rounded-xl border border-slate-700/70 bg-slate-900/95 p-3 shadow-lg shadow-black/30">
+            <Tabs tabs={tabs} orientation="vertical" className="w-full" onSelect={closeMenu} />
+          </div>
+        </div>
+      </div>
+    )}
+  </header>
 }

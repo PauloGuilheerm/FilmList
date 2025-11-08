@@ -56,7 +56,7 @@ export default function Card({
           onClick={handleToggleFavorite}
           className="
           absolute right-2 top-2 z-20 inline-grid h-7 w-7 place-items-center rounded-full bg-black/80 backdrop-blur-sm ring-1 ring-white/20 transition
-          hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/80"
+          hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/80 cursor-pointer"
         >
           {isFavorite ? <FaHeart color="red" size={10} /> : <CiHeart color="red" size={13} />}
         </button>

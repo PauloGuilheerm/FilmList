@@ -42,9 +42,9 @@ export default function Movie() {
       </span>
     </div>
   }
-  
+
   return (
-    <section className="flex p-7 lg:flex-row lg:items-start">
+    <section className="flex flex-col gap-8 px-5 py-6 lg:flex-row lg:items-start lg:gap-12 lg:px-12 lg:py-10">
       <MovieImage backdrop_path={film.backdrop_path ?? ''} title={film.title ?? ''} />
       <MovieDetails film={film} />
     </section>
