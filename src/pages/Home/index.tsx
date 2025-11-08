@@ -1,33 +1,33 @@
-import Card from '../../components/Card'
-import { getFilms } from '../../service/tmdb/films.service';
-import type { Film } from '../../types/Film';
+import Card from '../../components/Card';
+import { getMovies } from '../../service/tmdb/movies.service';
+import type { Movie } from '../../types/Movie';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useFavorites } from '../../hooks/useFavorites';
-import { useFilm } from '../../context/FilmContextt';
+import { useMovie } from '../../context/MovieContext';
 import { useToast } from '../../context/ToastContext';
 import { useNavigate } from 'react-router-dom';
-import { CgSpinner } from 'react-icons/cg';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function Home() {
   const {
     loading, setLoading,
-    films, setFilms,
+    movies, setMovies,
     page, setPage,
     hasMore, setHasMore
-  } = useFilm();
+  } = useMovie();
 
   const { isFavorite, toggleFavorite } = useFavorites();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  const fetchFilms = async () => {
+  const fetchMovies = async () => {
     if (loading) return;
     try {
       setLoading(true);
-      const response = await getFilms(page);
-      setFilms((prev) => {
-        const ids = new Set(prev.map(f => f.id));
-        const uniques = response.results.filter(f => !ids.has(f.id));
+      const response = await getMovies(page);
+      setMovies((prev) => {
+        const ids = new Set(prev.map((movie) => movie.id));
+        const uniques = response.results.filter((movie) => !ids.has(movie.id));
         return [...prev, ...uniques];
       });
       setHasMore(response.total_pages > response.page);
@@ -39,36 +39,37 @@ export default function Home() {
     }
   };
 
-  const onFilmClick = (index: number) => {
-    const film = films.at(index);
-    if (film) {
-      navigate(`/movie/${film.id}`);
+  const onMovieClick = (index: number) => {
+    const movie = movies.at(index);
+    if (movie) {
+      navigate(`/movie/${movie.id}`);
     } else {
       showToast({ message: 'Filme não encontrado', type: 'error' });
     }
   };
 
   return <InfiniteScroll
-    dataLength={films.length}
+    dataLength={movies.length}
     className="flex flex-wrap justify-start ps-4 pt-4 gap-4"
-    next={fetchFilms}
+    next={fetchMovies}
     hasMore={hasMore}
     loader={<div className="flex justify-center items-center w-full h-100">
-      <CgSpinner size="50" color="white"/>
+      <FaSpinner size={50} className="text-slate-300 animate-spin" />
     </div>}
-    endMessage={<p className="text-slate-400">Esses são todos os filmes que encontramos</p>}
+    endMessage={<p className="text-slate-400 text-md">Esses são todos os filmes que encontramos</p>}
   >
-    {films.map((film: Film, index: number) => (
+    {movies.map((movie: Movie, index: number) => (
       <Card
-        key={`${film.id}-${film.title.replaceAll(' ', '-')}`}
+        key={`${movie.id}-${movie.title.replaceAll(' ', '-')}`}
         index={index}
-        rating={Number.parseInt(film.vote_average.toFixed(2))}
-        title={film.title}
-        posterUrl={film.backdrop_path ?? ''}
-        isFavorite={isFavorite(film.id)}
-        onToggleFavorite={() => toggleFavorite(film)}
-        onFilmClick={onFilmClick}
+        rating={Number.parseInt(movie.vote_average.toFixed(2))}
+        title={movie.title}
+        posterUrl={movie.backdrop_path ?? ''}
+        isFavorite={isFavorite(movie.id)}
+        onToggleFavorite={() => toggleFavorite(movie)}
+        onMovieClick={onMovieClick}
+        cardAction="favorite"
       />
     ))}
-  </InfiniteScroll>
+  </InfiniteScroll>;
 }

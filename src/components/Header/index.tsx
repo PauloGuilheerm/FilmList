@@ -19,7 +19,7 @@ export default function Header() {
 
   const tabs = [
     { label: 'Home', to: '/' },
-    { label: 'Favoritos', to: '/favoritos' },
+    { label: 'Favoritos', to: '/favorites' },
   ];
 
   const toggleMenu = () => {

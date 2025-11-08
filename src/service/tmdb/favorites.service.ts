@@ -1,14 +1,14 @@
-import type { Film } from "../../types/Film";
-import type { FilmsResponse } from "../../types/FilmsResponse";
+import type { Movie } from "../../types/Movie";
+import type { MoviesResponse } from "../../types/MoviesResponse";
 import httpClient from "../HttpClient";
 
-export const getFavorites = async (): Promise<FilmsResponse> => {
-    const response = await httpClient.get<FilmsResponse>(`/account/${import.meta.env.VITE_ACCOUNT_KEY}/favorite/movies`);
+export const getFavorites = async (): Promise<MoviesResponse> => {
+    const response = await httpClient.get<MoviesResponse>(`/account/${import.meta.env.VITE_ACCOUNT_KEY}/favorite/movies`);
     return response;
 }
 
 export const addFavorite = async (id: number) => {
-    const response = await httpClient.post<Film>(`/account/${import.meta.env.VITE_ACCOUNT_KEY}/favorite`, {
+    const response = await httpClient.post<Movie>(`/account/${import.meta.env.VITE_ACCOUNT_KEY}/favorite`, {
         media_type: 'movie',
         media_id: id,
         favorite: true
@@ -16,7 +16,7 @@ export const addFavorite = async (id: number) => {
     return response;
 }
 export const removeFavorite = async (id: number) => {
-    const response = await httpClient.post<Film>(`/account/${import.meta.env.VITE_ACCOUNT_KEY}/favorite`, {
+    const response = await httpClient.post<Movie>(`/account/${import.meta.env.VITE_ACCOUNT_KEY}/favorite`, {
         media_type: 'movie',
         media_id: id,
         favorite: false

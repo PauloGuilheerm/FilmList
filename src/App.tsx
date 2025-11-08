@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Header from './components/Header'
-import FilmProvider from './context/FilmProvider'
+import MovieProvider from './context/MovieProvider'
 import Home from './pages/Home'
 import { ToastProvider } from './context/ToastProvider'
 import Movie from './pages/Movie'
+import Favorites from './pages/Favorites'
 
 const GenericComponent = ({ children }: { children: React.ReactNode }) => {
   return <>
@@ -24,13 +25,19 @@ const router = createBrowserRouter([
     element: <GenericComponent>
       <Movie />
     </GenericComponent>
+  },
+  {
+    path: '/favorites',
+    element: <GenericComponent>
+      <Favorites />
+    </GenericComponent>
   }
 ]);
 
 export default function App() {
   return <ToastProvider>
-    <FilmProvider>
+    <MovieProvider>
       <RouterProvider router={router} />
-    </FilmProvider>
+    </MovieProvider>
   </ToastProvider>
 }
