@@ -16,7 +16,6 @@ const getSelectedDefaultSortByRating = (currentSort: SortConfig | null) => curre
 export default function Favorites() {
   const {
     favorites,
-    isFavorite,
     toggleFavorite,
     sortFavoritesByTitle,
     sortFavoritesByRating,
@@ -25,11 +24,11 @@ export default function Favorites() {
   const { loading } = useMovie();
   const navigate = useNavigate();
   const { showToast } = useToast();
-  
+
   const [selectedSort, setSelectedSort] = useState<FavoritesSortOption>(
-    currentSort?.key === "title" ? 
-    getSelectedDefaultSortByTitle(currentSort) : 
-    getSelectedDefaultSortByRating(currentSort)
+    currentSort?.key === "title" ?
+      getSelectedDefaultSortByTitle(currentSort) :
+      getSelectedDefaultSortByRating(currentSort)
   );
 
   useEffect(() => {
@@ -84,10 +83,10 @@ export default function Favorites() {
       <FaTrash color="white" size={10} />
     </button>
   }, [])
-  
+
   return (
     <>
-      <FavoritesHeader onSortChange={handleSortChange} selectedSort={selectedSort}/>
+      <FavoritesHeader onSortChange={handleSortChange} selectedSort={selectedSort} />
       <div
         className="flex flex-wrap justify-start ps-4 pt-4 gap-4 overflow-y-auto "
         style={{ height: window.innerHeight - 250 }}
@@ -98,7 +97,7 @@ export default function Favorites() {
             index={index}
             rating={Number.parseInt(movie.vote_average.toFixed(2))}
             title={movie.title}
-            posterUrl={movie.backdrop_path ?? ''}
+            posterUrl={movie.poster_path ?? ''}
             onToggleFavorite={() => toggleFavorite(movie)}
             onMovieClick={onMovieClick}
             CardAction={({ handleClick }) => CardAction(handleClick)}

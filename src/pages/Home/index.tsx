@@ -84,7 +84,7 @@ export default function Home() {
         index={index}
         rating={Number.parseInt(movie.vote_average.toFixed(2))}
         title={movie.title}
-        posterUrl={movie.backdrop_path ?? ''}
+        posterUrl={movie.poster_path ?? ''}
         onToggleFavorite={() => toggleFavorite(movie)}
         onMovieClick={onMovieClick}
         CardAction={({handleClick}) => CardAction(handleClick, movie.id)}/>

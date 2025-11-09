@@ -70,7 +70,7 @@ export default function Card({
       <div className="relative h-[190px] w-full bg-[#526075]">
         {posterUrl ? (
           <img
-            src={`https://image.tmdb.org/t/p/w500${posterUrl}`}
+            src={`https://image.tmdb.org/t/p/w300${posterUrl}`}
             alt={`Poster do filme ${title}`}
             className="h-full w-full object-cover"
           />

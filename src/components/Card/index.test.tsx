@@ -68,7 +68,7 @@ describe('Card', () => {
     const { props: { title } } = renderCard({ posterUrl: '/sample.png' });
 
     const image = screen.getByRole('img', { name: `Poster do filme ${title}` });
-    expect(image).toHaveAttribute('src', 'https://image.tmdb.org/t/p/w500/sample.png');
+    expect(image).toHaveAttribute('src', 'https://image.tmdb.org/t/p/w300/sample.png');
   });
 
   it('should call onMovieClick with index when card is clicked', async () => {
