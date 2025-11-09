@@ -37,7 +37,7 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
           <Rating className="ms-1 inline-flex" rating={Number.parseInt(movie.vote_average.toFixed(2))} />
         </div>
       </div>
-      <div className="mt-4 max-w-full overflow-hidden">
+      <div className="mt-4 max-w-full">
         <span className="text-lg font-semibold text-white">
           Sinopse:
         </span>

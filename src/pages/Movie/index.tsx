@@ -44,7 +44,7 @@ export default function MoviePage() {
   }
 
   return (
-    <section className="flex flex-col gap-8 px-5 py-6 lg:flex-row lg:items-start lg:gap-12 lg:px-12 lg:py-10">
+    <section className="flex flex-col gap-8 px-5 py-6 pb-8 lg:flex-row lg:items-start lg:gap-12 lg:px-12 lg:py-10">
       <MovieImage backdrop_path={movie.backdrop_path ?? ''} title={movie.title ?? ''} />
       <MovieDetails movie={movie} />
     </section>

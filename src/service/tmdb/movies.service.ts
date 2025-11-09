@@ -3,12 +3,21 @@ import type { MoviesResponse } from "../../types/MoviesResponse";
 import httpClient from "../HttpClient";
 
 export const getMovies = async (page: number): Promise<MoviesResponse> => {
-  const response = await httpClient.get<MoviesResponse>(`/movie/popular?page=${page}`);
+  const response = await httpClient.get<MoviesResponse>('/movie/popular', {
+    params: {
+      page: page,
+      language: 'pt-BR'
+    }
+  });
   return response;
 };
 
 export const getMovie = async (id: number): Promise<Movie> => {
-  const response = await httpClient.get<Movie>(`/movie/${id}`);
+  const response = await httpClient.get<Movie>(`/movie/${id}`, {
+    params: {
+      language: 'pt-BR'
+    }
+  });
   return response;
 };
 
