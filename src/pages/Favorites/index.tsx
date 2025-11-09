@@ -88,7 +88,7 @@ export default function Favorites() {
     <>
       <FavoritesHeader onSortChange={handleSortChange} selectedSort={selectedSort} />
       <div
-        className="flex flex-wrap justify-start ps-4 pt-4 gap-4 overflow-y-auto "
+        className="flex flex-wrap justify-center md:justify-start ps-4 pt-4 gap-4 overflow-y-auto "
         style={{ height: window.innerHeight - 250 }}
       >
         {favorites.map((movie: Movie, index: number) => (

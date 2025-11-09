@@ -136,7 +136,7 @@ export default function Search() {
       ) : (
         <InfiniteScroll
           dataLength={results.length}
-          className="flex flex-wrap justify-start ps-4 mt-4 gap-4 overflow-y-auto"
+          className="flex flex-wrap justify-center md:justify-start ps-4 mt-4 gap-4 overflow-y-auto"
           next={loadMoreResults}
           hasMore={hasMore}
           height={window.innerHeight - 100}

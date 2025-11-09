@@ -51,7 +51,7 @@ export default function Home() {
     }
   };
 
-  const CardAction = useCallback((handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void, itemId: number) : React.ReactNode => {
+  const CardAction = useCallback((handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void, itemId: number): React.ReactNode => {
     const itemIsFavorite = isFavorite(itemId);
     return <button
       type="button"
@@ -69,7 +69,7 @@ export default function Home() {
 
   return <InfiniteScroll
     dataLength={movies.length}
-    className="flex flex-wrap justify-start ps-4 pt-4 gap-4 overflow-y-auto"
+    className="flex flex-wrap justify-center md:justify-start ps-4 pt-4 gap-4 overflow-y-auto"
     next={fetchMovies}
     height={window.innerHeight - 100}
     hasMore={hasMore}
@@ -87,7 +87,7 @@ export default function Home() {
         posterUrl={movie.poster_path ?? ''}
         onToggleFavorite={() => toggleFavorite(movie)}
         onMovieClick={onMovieClick}
-        CardAction={({handleClick}) => CardAction(handleClick, movie.id)}/>
+        CardAction={({ handleClick }) => CardAction(handleClick, movie.id)} />
     ))}
   </InfiniteScroll>;
 }
