@@ -27,11 +27,10 @@ const defaultSortConfig: SortConfig = {
 };
 
 export const useFavorites = (): useFavoritesReturn => {
-  const [favorites, setFavorites] = useState<Movie[]>([]);
-  const [favoriteIds, setFavoriteIds] = useState<Set<number>>(() => new Set());
   const [sortConfig, setSortConfig] = useState<SortConfig>(defaultSortConfig);
 
-  const { setLoading } = useMovie();
+  const { favorites, setFavorites, favoriteIds, setFavoriteIds, setLoading} = useMovie();
+
   const { showToast } = useToast();
 
   const sortMovies = useCallback((movies: Movie[], config: SortConfig | null = sortConfig) => {

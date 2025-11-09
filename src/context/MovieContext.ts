@@ -10,6 +10,10 @@ export const MovieContext = createContext<{
   setPage: Dispatch<SetStateAction<number>>;
   hasMore: boolean;
   setHasMore: (hasMore: boolean) => void;
+  favorites: Movie[];
+  setFavorites: Dispatch<SetStateAction<Movie[]>>;
+  favoriteIds: Set<number>;
+  setFavoriteIds: Dispatch<SetStateAction<Set<number>>>;
 }>({
   loading: false,
   setLoading: () => { },
@@ -18,7 +22,11 @@ export const MovieContext = createContext<{
   page: 1,
   setPage: () => { },
   hasMore: true,
-  setHasMore: () => { }
+  setHasMore: () => { },
+  favorites: [],
+  setFavorites: () => { },
+  favoriteIds: new Set(),
+  setFavoriteIds: () => { }
 });
 
 export const useMovie = () => useContext(MovieContext);

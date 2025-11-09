@@ -6,6 +6,8 @@ import { getMovies } from "../service/tmdb/movies.service";
 export default function MovieProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [favorites, setFavorites] = useState<Movie[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<Set<number>>(() => new Set());
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
@@ -30,8 +32,12 @@ export default function MovieProvider({ children }: { children: ReactNode }) {
     page,
     setPage,
     hasMore,
-    setHasMore
-  }), [loading, movies, page, hasMore]);
+    setHasMore,
+    favorites,
+    setFavorites,
+    favoriteIds,
+    setFavoriteIds
+  }), [loading, movies, page, hasMore, favorites, favoriteIds]);
 
   return (
     <MovieContext.Provider value={contextValue}>
