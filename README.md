@@ -1,73 +1,37 @@
-# React + TypeScript + Vite
+# MovieDB APP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web construída consumindo a API "themoviedb"
+https://www.themoviedb.org/
 
-Currently, two official plugins are available:
+## stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React + vite
+- Tailwind
+- Axios
+- Context API 
+- Api The Movie Database
 
-## React Compiler
+## libs utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Axios
+- Tailwind
+- lucide-react
+- react-icons
+- react-infinite-scroll-component
+- react-toastify
 
-## Expanding the ESLint configuration
+## Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Listagem de filmes populares com infinite scroll.
+- Busca por filmes com infinite scroll.  
+- Favoritar e desfavoritar filmes (sincronizado com conta da TMDB).
+- Ordenar por titulo A-Z e Z-A, e por notas MAIOR-MENOR, MENOR-MAIOR
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+como rodar:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. abra o cmd em uma pasta de sua preferência
+2. rode o comando: <pre>```git clone https://github.com/seu-usuario/moviedb.git```</pre>
+3. abra o projeto no seu editor de código
+4. crie o arquivo ".env" na raiz do projeto com base no nosso arquivo ```.env.example```
+5. rode o comando <pre>```npm start```</pre>
+ 5.1 esse comando irá verificar se as dependências já foram baixadas, caso não, ele irá baixar as dependências antes de subir o projeto.
