@@ -4,6 +4,7 @@ type TabsProps = {
   tabs: {
     label: string;
     to: string;
+    onClick?: () => void;
   }[];
   orientation?: 'horizontal' | 'vertical';
   className?: string;
@@ -29,7 +30,10 @@ export function Tabs({ tabs, orientation = 'horizontal', className = '', onSelec
           <li key={tab.label}>
             <NavLink
               to={tab.to}
-              onClick={() => onSelect?.(tab.to)}
+              onClick={() =>{
+                onSelect?.(tab.to);
+                tab.onClick?.();
+              }}
               className={({ isActive }) => `${base} ${isActive ? active : inactive}`}
             >
               {tab.label}

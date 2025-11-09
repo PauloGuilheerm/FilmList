@@ -1,4 +1,5 @@
-import type { MouseEvent } from "react";
+import type { MouseEvent, ReactNode } from "react";
+import { useMemo } from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart, FaTrash } from "react-icons/fa";
 import Rating from "./Rating";
@@ -12,6 +13,7 @@ type CardProps = {
   isFavorite?: boolean;
   index: number;
   cardAction: 'favorite' | 'delete';
+  highlightTerm?: string;
 };
 
 export default function Card({
@@ -22,8 +24,38 @@ export default function Card({
   isFavorite = false,
   onMovieClick,
   index,
-  cardAction
+  cardAction,
+  highlightTerm
 }: CardProps) {
+  const sanitizedHighlight = highlightTerm?.trim();
+
+  const highlightedTitle = useMemo<ReactNode>(() => {
+    if (!sanitizedHighlight) {
+      return title;
+    }
+
+    const escapedTerm = sanitizedHighlight.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp(`(${escapedTerm})`, "gi");
+    const parts = title.split(regex);
+
+    return parts.map((part, partIndex) => {
+      const isMatch = part.toLowerCase() === sanitizedHighlight.toLowerCase();
+
+      if (isMatch) {
+        return (
+          <span
+            key={`highlight-${part}-${partIndex}`}
+            className="bg-yellow-400 p-1 text-black"
+          >
+            {part}
+          </span>
+        );
+      }
+
+      return <span key={`text-${part}-${partIndex}`}>{part}</span>;
+    });
+  }, [sanitizedHighlight, title]);
+
   const handleToggleFavorite = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     onToggleFavorite();
@@ -79,7 +111,9 @@ export default function Card({
 
       <div className="flex flex-col items-start justify-start gap-2 bg-[#334155] pb-3 ps-2 pt-2">
         <div className="min-w-0">
-          <p className="truncate text-[12px] font-semibold text-white" title={title}>{title}</p>
+          <p className="truncate text-[12px] font-semibold text-white" title={title}>
+            {highlightedTitle}
+          </p>
         </div>
 
         <Rating rating={rating} />

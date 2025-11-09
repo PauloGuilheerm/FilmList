@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import { ToastProvider } from './context/ToastProvider'
 import Movie from './pages/Movie'
 import Favorites from './pages/Favorites'
+import Search from './pages/Search'
 
 const GenericComponent = ({ children }: { children: React.ReactNode }) => {
   return <>
@@ -33,9 +34,9 @@ const router = createBrowserRouter([
     </GenericComponent>
   },
   {
-    path: '/search?q=termo',
+    path: '/search',
     element: <GenericComponent>
-      <Favorites />
+      <Search />
     </GenericComponent>
   },
 ]);
