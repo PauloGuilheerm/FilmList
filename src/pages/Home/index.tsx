@@ -6,7 +6,9 @@ import { useFavorites } from '../../hooks/useFavorites';
 import { useMovie } from '../../context/MovieContext';
 import { useToast } from '../../context/ToastContext';
 import { useNavigate } from 'react-router-dom';
-import { FaSpinner } from 'react-icons/fa';
+import { FaHeart, FaSpinner } from 'react-icons/fa';
+import { useCallback } from 'react';
+import { CiHeart } from 'react-icons/ci';
 
 export default function Home() {
   const {
@@ -49,6 +51,22 @@ export default function Home() {
     }
   };
 
+  const CardAction = useCallback((handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void, itemId: number) : React.ReactNode => {
+    const itemIsFavorite = isFavorite(itemId);
+    return <button
+      type="button"
+      aria-label={itemIsFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+      onClick={handleClick}
+      className="
+  absolute right-2 top-2 z-20 inline-grid h-7 w-7 place-items-center rounded-full bg-black/80 backdrop-blur-sm ring-1 ring-white/20 transition
+  hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/80 cursor-pointer"
+    >
+      {itemIsFavorite ?
+        <FaHeart data-testid="favorite-icon" color="red" size={10} /> :
+        <CiHeart data-testid="unfavorite-icon" color="red" size={13} />}
+    </button>
+  }, [isFavorite])
+
   return <InfiniteScroll
     dataLength={movies.length}
     className="flex flex-wrap justify-start ps-4 pt-4 gap-4 overflow-y-auto"
@@ -62,16 +80,14 @@ export default function Home() {
   >
     {movies.map((movie: Movie, index: number) => (
       <Card
-        key={`${movie.id}-${movie.title.replaceAll(' ', '-')}`}
+        key={`${movie.id}-${movie.title.replaceAll(' ', '-')}-${index}`}
         index={index}
         rating={Number.parseInt(movie.vote_average.toFixed(2))}
         title={movie.title}
         posterUrl={movie.backdrop_path ?? ''}
-        isFavorite={isFavorite(movie.id)}
         onToggleFavorite={() => toggleFavorite(movie)}
         onMovieClick={onMovieClick}
-        cardAction="favorite"
-      />
+        CardAction={({handleClick}) => CardAction(handleClick, movie.id)}/>
     ))}
   </InfiniteScroll>;
 }

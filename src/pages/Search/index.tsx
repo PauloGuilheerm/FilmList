@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner, FaTrash } from "react-icons/fa";
 
 import type { Movie } from "../../types/Movie";
 import Card from "../../components/Card";
@@ -18,7 +18,7 @@ export default function Search() {
   const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { isFavorite, toggleFavorite } = useFavorites();
+  const { toggleFavorite } = useFavorites();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -96,6 +96,19 @@ export default function Search() {
     navigate(`/movie/${movieId}`);
   };
 
+  const CardAction = useCallback((handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void): React.ReactNode => {
+    return <button
+      type="button"
+      aria-label={"deletar dos favoritos"}
+      onClick={handleClick}
+      className="
+        absolute right-2 top-2 z-20 inline-grid h-7 w-7 place-items-center rounded-full bg-black/80 backdrop-blur-sm ring-1 ring-white/20 transition
+        hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/80 cursor-pointer"
+    >
+      <FaTrash color="white" size={10} />
+    </button>
+  }, [])
+
   return (
     <>
       <section className="flex flex-col gap-2 px-6 py-6 border-b border-gray-700">
@@ -149,10 +162,9 @@ export default function Search() {
               rating={Number.parseInt(movie.vote_average.toFixed(2))}
               title={movie.title}
               posterUrl={movie.backdrop_path ?? ""}
-              isFavorite={isFavorite(movie.id)}
               onToggleFavorite={() => toggleFavorite(movie)}
               onMovieClick={() => handleMovieClick(movie.id)}
-              cardAction="favorite"
+              CardAction={({ handleClick }) => CardAction(handleClick)}
               highlightTerm={query}
             />
           ))}

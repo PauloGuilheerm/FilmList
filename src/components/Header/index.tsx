@@ -21,10 +21,10 @@ export default function Header() {
   };
 
   const handleDirectToHome = () => {
-    navigate('/');
+    navigate('/',);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!debouncedValue.trim()) {
       return;
     }
@@ -34,11 +34,14 @@ export default function Header() {
 
   const location = useLocation();
 
-  useEffect(()=>{
-    if (debouncedValue.trim() && !location.pathname.includes('/search')) {
+  useEffect(() => {
+    if (location.search.includes('q')) {
+      const [_, searchValue] = location.search.split('q=');
+      setSearch(searchValue);
+    } else {
       setSearch('');
     }
-  }, [debouncedValue, location.pathname]);
+  }, [debouncedValue, location.pathname, location.search]);
 
   const handleClearSearch = () => {
     setSearch('');
@@ -50,7 +53,7 @@ export default function Header() {
     {
       label: 'Home', to: '/', onClick: () => {
         setSearch('');
-        navigate('/');
+        navigate('/',);
       }
     },
     {

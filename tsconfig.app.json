@@ -4,8 +4,8 @@
     "target": "ES2022",
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "types": ["vite/client"],
+    "module": "ES2022",
+    "types": ["vitest", "vitest/globals", "@testing-library/jest-dom"],
     "skipLibCheck": true,
 
     "moduleResolution": "bundler",
@@ -18,9 +18,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "esModuleInterop": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "env.example.ts"]
+  "include": ["src", "env.example.ts", "setupTests.ts"]
 }

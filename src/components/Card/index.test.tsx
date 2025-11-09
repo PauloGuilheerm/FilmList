@@ -1,25 +1,38 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
+import type { MouseEvent, ReactNode } from 'react';
 import Card from './index';
 
+type CardActionProps = {
+  handleClick: (event: MouseEvent<HTMLButtonElement>) => void;
+};
+
+const DefaultCardAction = ({ handleClick }: CardActionProps) => (
+  <button type="button" aria-label="Card action" onClick={handleClick}>
+    Action
+  </button>
+);
+
 const renderCard = (overrideProps = {}) => {
+  const title = 'Star Wars: A New Hope';
   const defaultProps = {
-    title: 'Star Wars: A New Hope',
+    title: title,
     rating: 4.5,
     posterUrl: '/poster.jpg',
     onToggleFavorite: vi.fn(),
     onMovieClick: vi.fn(),
-    isFavorite: false,
     index: 3,
-    cardAction: 'favorite' as const,
+    CardAction: DefaultCardAction,
     highlightTerm: undefined,
   };
 
+  const user = userEvent.setup();
+  render(<Card {...defaultProps} {...overrideProps} />);
+
   return {
-    user: userEvent.setup(),
+    user,
     props: { ...defaultProps, ...overrideProps },
-    ...render(<Card {...defaultProps} {...overrideProps} />),
   };
 };
 
@@ -70,7 +83,16 @@ describe('Card', () => {
   it('should call onToggleFavorite and stop propagation', async () => {
     const onToggleFavorite = vi.fn();
     const onMovieClick = vi.fn();
-    const { user } = renderCard({ onToggleFavorite, onMovieClick });
+    const { user } = renderCard({
+      onToggleFavorite,
+      onMovieClick,
+      CardAction: ({ handleClick }: CardActionProps): ReactNode =>
+        <button
+          type="button"
+          aria-label="Adicionar aos favoritos"
+          onClick={handleClick}
+        />
+    });
 
     const toggleButton = screen.getByRole('button', { name: 'Adicionar aos favoritos' });
     await user.click(toggleButton);
@@ -79,26 +101,23 @@ describe('Card', () => {
     expect(onMovieClick).not.toHaveBeenCalled();
   });
 
-  it('should render favorite button states correctly', () => {
-    renderCard({ isFavorite: true });
-
-    expect(
-      screen.getByTestId('favorite-icon')
-    ).toBeInTheDocument();
-  });
-
-  it('should render delete button when cardAction is delete', () => {
-    renderCard({ cardAction: 'delete' });
-
-    expect(
-      screen.getByRole('button', { name: /deletar dos favoritos/i })
-    ).toBeInTheDocument();
-  });
-
   it('should set tabIndex using the provided index', () => {
     const { props: { title } } = renderCard({ index: 7 });
 
     expect(screen.getByLabelText(`Filme: ${title}`)).toHaveAttribute('tabindex', '7');
+  });
+
+  it('should render CardAction when provided', () => {
+    renderCard({
+      CardAction: ({ handleClick }: CardActionProps): ReactNode =>
+        <button
+          type="button"
+          aria-label="deletar dos favoritos"
+          onClick={handleClick}
+        />
+    });
+
+    expect(screen.getByLabelText('deletar dos favoritos')).toBeInTheDocument();
   });
 });
 

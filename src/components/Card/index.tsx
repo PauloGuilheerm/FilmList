@@ -1,7 +1,5 @@
 import type { MouseEvent, ReactNode } from "react";
 import { useMemo } from "react";
-import { CiHeart } from "react-icons/ci";
-import { FaHeart, FaTrash } from "react-icons/fa";
 import Rating from "./Rating";
 
 type CardProps = {
@@ -10,10 +8,9 @@ type CardProps = {
   posterUrl?: string;
   onToggleFavorite: () => void;
   onMovieClick: (index: number) => void;
-  isFavorite?: boolean;
   index: number;
-  cardAction: 'favorite' | 'delete';
   highlightTerm?: string;
+  CardAction?: ({ handleClick }: { handleClick: (event: MouseEvent<HTMLButtonElement>) => void }) => ReactNode;
 };
 
 export default function Card({
@@ -21,11 +18,10 @@ export default function Card({
   rating,
   posterUrl,
   onToggleFavorite,
-  isFavorite = false,
   onMovieClick,
   index,
-  cardAction,
-  highlightTerm
+  highlightTerm,
+  CardAction
 }: CardProps) {
   const sanitizedHighlight = highlightTerm?.trim();
 
@@ -84,31 +80,8 @@ export default function Card({
           </div>
         )}
 
-        {cardAction === 'delete' ? (
-          <button
-            type="button"
-            aria-label={"deletar dos favoritos"}
-            onClick={handleToggleFavorite}
-            className="
-          absolute right-2 top-2 z-20 inline-grid h-7 w-7 place-items-center rounded-full bg-black/80 backdrop-blur-sm ring-1 ring-white/20 transition
-          hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/80 cursor-pointer"
-          >
-            {<FaTrash color="white" size={10} />}
-          </button>
-        ) : (
-          <button
-            type="button"
-            aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-            onClick={handleToggleFavorite}
-            className="
-          absolute right-2 top-2 z-20 inline-grid h-7 w-7 place-items-center rounded-full bg-black/80 backdrop-blur-sm ring-1 ring-white/20 transition
-          hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/80 cursor-pointer"
-          >
-            {isFavorite ? 
-              <FaHeart data-testid="favorite-icon" color="red" size={10} /> :
-              <CiHeart data-testid="unfavorite-icon" color="red" size={13} />}
-          </button>
-        )}
+        {CardAction &&
+          <CardAction handleClick={handleToggleFavorite} />}
       </div>
 
       <div className="flex flex-col items-start justify-start gap-2 bg-[#334155] pb-3 ps-2 pt-2">

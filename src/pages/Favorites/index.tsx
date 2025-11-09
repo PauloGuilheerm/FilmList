@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFavorites, type SortConfig } from "../../hooks/useFavorites";
 import type { Movie } from "../../types/Movie";
 import Card from "../../components/Card";
 import FavoritesHeader, { type FavoritesSortOption } from "./Header";
 import { useMovie } from "../../context/MovieContext";
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner, FaTrash } from "react-icons/fa";
 import EmptyFavorites from "./Empty";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../context/ToastContext";
@@ -72,6 +72,19 @@ export default function Favorites() {
     }
   };
 
+  const CardAction = useCallback((handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void): React.ReactNode => {
+    return <button
+      type="button"
+      aria-label={"deletar dos favoritos"}
+      onClick={handleClick}
+      className="
+        absolute right-2 top-2 z-20 inline-grid h-7 w-7 place-items-center rounded-full bg-black/80 backdrop-blur-sm ring-1 ring-white/20 transition
+        hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/80 cursor-pointer"
+    >
+      <FaTrash color="white" size={10} />
+    </button>
+  }, [])
+  
   return (
     <>
       <FavoritesHeader onSortChange={handleSortChange} selectedSort={selectedSort}/>
@@ -86,10 +99,9 @@ export default function Favorites() {
             rating={Number.parseInt(movie.vote_average.toFixed(2))}
             title={movie.title}
             posterUrl={movie.backdrop_path ?? ''}
-            isFavorite={isFavorite(movie.id)}
             onToggleFavorite={() => toggleFavorite(movie)}
             onMovieClick={onMovieClick}
-            cardAction="delete"
+            CardAction={({ handleClick }) => CardAction(handleClick)}
           />
         ))}
         {loading && <div className="flex justify-center items-center w-full h-100">

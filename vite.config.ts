@@ -11,7 +11,7 @@ export default defineConfig({
     setupFiles: './src/setupTests.ts',
     coverage: {
       reporter: ['text', 'lcov', 'html'],
-      include: ['src/components/**/*.{ts,tsx}'],
-    },
-  },
+      include: ['src/components/**/*.{ts,tsx}']
+    }
+  }
 })
